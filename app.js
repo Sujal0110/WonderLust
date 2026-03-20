@@ -6,9 +6,13 @@ const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError");
 const session = require("express-session");
 const flash = require("connect-flash");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user");
 
-const listings = require("./router/listing");
-const reviews = require("./router/review");
+const listingRouter = require("./router/listing");
+const reviewRouter = require("./router/review");
+const userRouter = require("./router/user");
 
 const app = express();
 const port = 8080;
@@ -34,7 +38,7 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 
 const sessionOptions = {
-    secret: "mysuperscretcode",
+    secret: "mysupersecretcode",
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -51,23 +55,40 @@ app.get("/", (req, res) => {
 app.use(session(sessionOptions));
 app.use(flash());
 
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
+    res.locals.currUser = req.user;
     next();
 });
 
-app.use("/listings", listings);
-app.use("/listings/:id/reviews", reviews);
+app.get("/demouser", async (req, res) => {
+    let fakeUser = new User({
+        email: "xyz@gmail.com",
+        username: "xyz",
+    });
+    const registeredUser = await User.register(fakeUser, "xyz1234");
+    res.send(registeredUser);
+});
+
+app.use("/listings", listingRouter);
+app.use("/listings/:id/reviews", reviewRouter);
+app.use("/", userRouter);
 
 // AFTER all routes
-app.use((err, req, res, next) => {
+app.use((req, res, next) => {
     next(new ExpressError(404, "Page Not Found!!"));
 });
 
+//  Error handling middleware
 app.use((err, req, res, next) => {
     let { statusCode = 500, message = "Something went wrong!" } = err;
-    console.log(err);
     res.status(statusCode).render("error.ejs", { err });
 });
 
