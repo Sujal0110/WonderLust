@@ -1,3 +1,6 @@
+if (process.env.NODE_EVN != "production") {
+    require("dotenv").config();
+}
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
@@ -68,14 +71,14 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get("/demouser", async (req, res) => {
-    let fakeUser = new User({
-        email: "xyz@gmail.com",
-        username: "xyz",
-    });
-    const registeredUser = await User.register(fakeUser, "xyz1234");
-    res.send(registeredUser);
-});
+// app.get("/demouser", async (req, res) => {
+//     let fakeUser = new User({
+//         email: "xyz@gmail.com",
+//         username: "xyz",
+//     });
+//     const registeredUser = await User.register(fakeUser, "xyz1234");
+//     res.send(registeredUser);
+// });
 
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
