@@ -21,6 +21,9 @@ router
 // new route
 router.get("/new", isLoggedIn, listingController.renderNewForm);
 
+// search route
+router.route("/search").get(wrapAsync(listingController.index));
+
 router
     .route("/:id")
     .get(wrapAsync(listingController.showListing))
@@ -32,8 +35,7 @@ router
         wrapAsync(listingController.updateListing),
     )
     .delete(isLoggedIn, isOwner, wrapAsync(listingController.destroyListing));
-    
-router.route("/:category").get(wrapAsync(listingController.index));
+
 // edit route
 router.get(
     "/:id/edit",
@@ -41,5 +43,7 @@ router.get(
     isOwner,
     wrapAsync(listingController.renderEditForm),
 );
+
+router.route("/:category").get(wrapAsync(listingController.index));
 
 module.exports = router;
