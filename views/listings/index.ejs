@@ -1,18 +1,18 @@
 <% layout("/layouts/boilerplate") %>
     <style>
-        /* .listing-link {
-        text-decoration: none;
-        color: black;
-    }
+        .listing-link {
+            text-decoration: none;
+            color: black;
+        }
 
-    .listing-card {
-        transition: transform 0.2s ease-in-out;
-    }
+        .listing-card {
+            transition: transform 0.2s ease-in-out;
+        }
 
-    .listing-card:hover {
-        transform: scale(1.05);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    } */
+        .listing-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
 
         #filters {
             display: flex;
@@ -31,6 +31,7 @@
             background-color: #f0f0f0;
             transition: background-color 0.2s ease-in-out;
             opacity: 0.8;
+            flex-shrink: 0;
         }
 
         .filter:hover {
@@ -51,13 +52,47 @@
             border: 1px solid #ccc;
             border-radius: 1rem;
             padding: 0.5rem 1rem;
-            margin-left: 5rem;
+        }
+
+        .mobile-tax {
+            display: none;
         }
 
         .tax-info {
             display: none;
             font-size: 0.7rem;
             color: gray;
+        }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+            #filters {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                overflow-y: hidden;
+                white-space: nowrap;
+                padding-bottom: 0.5rem;
+                scrollbar-width: none;
+            }
+
+            #filters::-webkit-scrollbar {
+                display: none;
+            }
+
+            .filter {
+                min-width: fit-content;
+                margin-top: 0.5rem;
+            }
+
+            .desktop-tax {
+                display: none;
+            }
+
+            .mobile-tax {
+                display: flex;
+                width: fit-content;
+                margin: 1rem auto 0 auto;
+            }
         }
     </style>
     <div id="filters">
@@ -97,19 +132,17 @@
             <div><i class="fa-solid fa-snowflake"></i></div>
             <p>Arctic</p>
         </a>
-        <!-- <div class="filter">
-            <div><i class="fa-solid fa-igloo"></i></div>
-            <p>Domes</p>
-        </div>
-        <div class="filter">
-            <div><i class="fa-solid fa-ship"></i></div>
-            <p>Boats</p>
-        </div> -->
-        <div class="tax-toggle">
+        <div class="tax-toggle desktop-tax">
             <div class="form-check-reverse form-switch">
                 <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
                 <label class="form-check-label" for="switchCheckDefault">Display total after taxes</label>
             </div>
+        </div>
+    </div>
+    <div class="tax-toggle mobile-tax">
+        <div class="form-check-reverse form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+            <label class="form-check-label" for="switchCheckDefault">Display total after taxes</label>
         </div>
     </div>
     <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
