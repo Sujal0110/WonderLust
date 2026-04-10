@@ -134,14 +134,14 @@
         </a>
         <div class="tax-toggle desktop-tax">
             <div class="form-check-reverse form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+                <input class="form-check-input tax-switch" type="checkbox" role="switch" id="switchCheckDefault">
                 <label class="form-check-label" for="switchCheckDefault">Display total after taxes</label>
             </div>
         </div>
     </div>
     <div class="tax-toggle mobile-tax">
         <div class="form-check-reverse form-switch">
-            <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+            <input class="form-check-input tax-switch" type="checkbox" role="switch" id="switchCheckDefault">
             <label class="form-check-label" for="switchCheckDefault">Display total after taxes</label>
         </div>
     </div>
@@ -167,15 +167,14 @@
     </div>
 
     <script>
-        let taxSwitch = document.getElementById("switchCheckDefault");
-        taxSwitch.addEventListener("click", () => {
-            let taxInfo = document.getElementsByClassName("tax-info");
-            for (let info of taxInfo) {
-                if (taxSwitch.checked) {
-                    info.style.display = "inline"
-                } else {
-                    info.style.display = "none"
+        let taxSwitch = document.querySelectorAll(".tax-switch");
+        taxSwitch.forEach((toggle) => {
+            toggle.addEventListener("change", () => {
+                let taxInfo = document.getElementsByClassName("tax-info");
+                taxSwitch.forEach(sw => sw.checked = toggle.checked);
+                for (let info of taxInfo) {
+                    info.style.display = toggle.checked ? "inline" : "none"
                 }
-            }
+            })
         })
     </script>
