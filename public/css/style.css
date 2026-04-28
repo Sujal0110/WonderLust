@@ -3,6 +3,8 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background-color: var(--bs-body-bg);
+    color: var(--bs-body-color);
 }
 
 .container {
@@ -12,7 +14,7 @@ body {
 /* Navbar */
 .navbar {
     height: 5rem;
-    background-color: white;
+    background-color: var(--bs-body-bg) !important;
 }
 
 .fa-compass {
@@ -21,14 +23,43 @@ body {
 }
 
 .nav-link {
-    color: #222222 !important;
+    color: var(--bs-body-color) !important;
+}
+.search-bar {
+    display: flex;
+    align-items: center;
+    width: 50vw;
+}
+
+.search-bar form {
+    display: flex;
+    width: 100%;
+    gap: 0.5rem;
+}
+
+.search-btn {
+    background-color: #fe424d;
+    color: white;
+    border-radius: 25px;
+    padding: 0 1rem;
+    border: none;
+    white-space: nowrap;
+}
+
+.search-input {
+    flex: 1;
+    border-radius: 25px;
+    padding: 0.5rem 1rem;
+    border: 1px solid #ccc;
+    outline: none;
 }
 
 /* Footer */
 .f-info {
     text-align: center;
     min-height: 8rem;
-    background-color: #ebebeb;
+    background-color: var(--bs-tertiary-bg);
+    color: var(--bs-body-color);
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -50,7 +81,7 @@ body {
 
 .f-info-links a {
     text-decoration: none;
-    color: #222222;
+    color: var(--bs-body-color);
 }
 
 .f-info-links a:hover {
@@ -61,6 +92,8 @@ body {
 .listing-card {
     border: none !important;
     margin-bottom: 2rem;
+    background-color: var(--bs-body-bg);
+    color: var(--bs-body-color);
 }
 
 .card-img-top {
@@ -81,16 +114,6 @@ body {
     text-decoration: none;
 }
 
-/* Card Hover Effect */
-.card-img-overlay {
-    opacity: 0;
-}
-
-.card-img-overlay:hover {
-    opacity: 0.2;
-    background-color: white;
-}
-
 /* Buttons */
 .add-btn,
 .edit-btn {
@@ -109,6 +132,11 @@ body {
     gap: 1rem;
     flex-wrap: wrap;
 }
+.delete-btn {
+    background-color: var(--bs-body-color) !important;
+    color: var(--bs-body-bg) !important;
+    border: none !important;
+}
 
 .show-card {
     padding-left: 0;
@@ -124,6 +152,9 @@ body {
 
 /* TABLET */
 @media (max-width: 992px) {
+    .search-bar {
+        width: 40vw;
+    }
     .navbar {
         height: auto;
         padding: 1rem 0;
@@ -138,7 +169,7 @@ body {
     }
 }
 
-/*MOBILE */
+/* MOBILE */
 @media (max-width: 768px) {
     .fa-compass {
         font-size: 1.6rem;
@@ -174,6 +205,49 @@ body {
 
     #map {
         height: 300px;
+    }
+
+    /* Navbar */
+    .navbar-collapse {
+        position: absolute;
+        top: 70px;
+        right: 10px;
+        width: 260px;
+        background-color: var(--bs-body-bg);
+        border-radius: 16px;
+        padding: 1rem;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        z-index: 1000;
+    }
+
+    .navbar-collapse .nav-link {
+        padding: 0.75rem 1rem;
+        border-radius: 10px;
+        transition: 0.2s;
+    }
+
+    .navbar-collapse .nav-link:hover {
+        background-color: #473a3a;
+    }
+
+    .nav-title {
+        display: none !important;
+    }
+
+    .search-bar {
+        flex: 1;
+        margin: 10px 0px;
+    }
+
+    .search-bar .search-input {
+        width: 100%;
+        font-size: 0.9rem;
+    }
+
+    .search-bar .search-btn {
+        margin-right: 0.5rem;
+        padding: 0 0.8rem;
+        font-size: 0.8rem;
     }
 }
 
